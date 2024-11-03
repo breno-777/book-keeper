@@ -1,0 +1,11 @@
+@use '@styles/variables' as *;
+
+.container {
+    & footer {
+        display: flex;
+        justify-content: space-between;
+
+        font-size: 0.875em;
+        color: $gray-400-color;
+    }
+}

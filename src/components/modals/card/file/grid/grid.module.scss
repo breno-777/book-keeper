@@ -1,0 +1,72 @@
+@use '@styles/variables' as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 1em;
+    gap: 0.375em;
+    min-height: 180px;
+
+    border-radius: 0.5em;
+    border: 2px solid transparent;
+
+    transition: 0.2s ease-in-out;
+
+    box-shadow: 0px 0px 60px 0px rgba(226, 236, 249, 0.25);
+    -webkit-box-shadow: 0px 0px 60px 0px rgba(226, 236, 249, 0.25);
+    -moz-box-shadow: 0px 0px 60px 0px rgba(226, 236, 249, 0.25);
+
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 30%;
+
+    & .file_preview_container {
+        display: flex;
+        flex: 1;
+    }
+
+    & .divider {
+        border-top: 1px solid $gray-400-color;
+    }
+
+    .file_name {
+        font-size: 0.75em;
+    }
+
+    & .file_details_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        color: $gray-400-color;
+        font-size: 0.625em;
+
+        & .details {
+            display: flex;
+            gap: 1em;
+
+            & .open_dropdown_button {
+                cursor: pointer;
+            }
+        }
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            scale: 0.9;
+        }
+
+        to {
+            opacity: 1;
+            scale: 1;
+        }
+    }
+}
+
+.container:hover {
+    cursor: pointer;
+    scale: 1.01;
+    border: 2px solid $light-primary-color;
+}

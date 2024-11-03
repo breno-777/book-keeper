@@ -1,0 +1,21 @@
+.color_picker {
+    position: relative;
+    display: flex;  
+
+    input[type="color"] {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+
+    }
+
+    & .color_sphere {
+        width: 1.4em;
+        height: 1.4em;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        display: inline-block;
+    }
+}

@@ -1,0 +1,57 @@
+@use './_variables.scss' as *;
+// $dark-theme: false !default;
+
+// :root {
+//     --primary: #5932EA;
+//     --secondary: #FAFBFF;
+//     --tertiary: #E2ECF9;
+//     --primary-text: #000000;
+//     --secondary-text: #D9D9D9;
+//     --white-100: #FFFFFF;
+//     --red: #F23F43;
+//     --green: #23A55A;
+// }
+
+// .dark-theme {
+//     --primary: #5932EA;
+//     --secondary: #FAFBFF;
+//     --tertiary: #E2ECF9;
+//     --primary-text: #FFFFFF;
+//     --secondary-text: #D9D9D9;
+//     --red: #FF5C5C;
+//     --green: #3ED598;
+// }
+
+html,
+body {
+    background: $light-secondary-color;
+    width: 100%;
+    height: 100%;
+    max-height: 100wv;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    user-select: none;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    font-family: var(--font-poppins);
+}
+
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba($light-primary-color, 0.8);
+    border-radius: 2em;
+}

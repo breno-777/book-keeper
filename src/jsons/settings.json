@@ -1,0 +1,10 @@
+{
+    "show_recently_accessed": true,
+    "automatically_generate_backups": true,
+    "backups_path": "C:/breno/documents/BookKeeper/{userDirectory}/",
+    "automatically_update_version": true,
+    "empty_trash_automatically": true,
+    "empty_trash_delay": 60,
+    "default_language": "en",
+    "default_theme": "default_system"
+}

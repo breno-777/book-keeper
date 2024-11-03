@@ -1,0 +1,29 @@
+@use '@styles/variables' as *;
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    gap: 2em;
+
+    & .title {
+        color: $gray-400-color;
+        font-size: 2em;
+        font-weight: 600;
+
+        & span {
+            color: $light-primary-color;
+        }
+    }
+
+    & .user_container {
+        display: grid;
+        grid-template-columns: repeat(var(--user-quantity), 1fr);
+        gap: 1em;
+    }
+}

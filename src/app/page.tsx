@@ -1,95 +1,96 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import styles from "@styles/page.module.scss";
+import { SideBar } from "@/components/sidebar";
+import Main from "./pages/main/page";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import Settings from "./pages/settings/page";
+import { Loading } from "./pages/loading";
+import { useContext, useEffect, useState } from "react";
+import { PageContext } from "@/hooks/context/page/PageContext";
+import { UploadModal } from "@/components/modals/upload";
+import PdfViewer from "@/components/modals/pdf";
+import { Login } from "./pages/login";
 
 export default function Home() {
+  const context = useContext(PageContext);
+  const [loadingMessages, setLoadingMessages] = useState<string>('Loading...');
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const loadData = async () => {
+    const updateMessage = (msg: string) => {
+      setLoadingMessages(msg);
+    };
+
+    try {
+      updateMessage('Checking for updates...');
+      await window.electron.startFunction('check-for-updates');
+
+      updateMessage('Creating necessary directories...');
+      await delay(1000);
+      await window.electron.startFunction('check-necessary-directories');
+
+      // updateMessage('Getting all the files...');
+      // await delay(1000);
+      // const result = await window.electron.getAllBooks('get-books-files');
+      // setFiles(result);
+
+      setLoadingMessages('');
+    } catch (error) {
+      console.error('Error loading data:', error);
+      setLoadingMessages('Failed to load data. Please check the console for more details.');
+    }
+  };
+
+
+  const renderPage = () => {
+    if (currentPage === 'all-books') {
+      return <Main />
+    } else if (currentPage === 'settings') {
+      return <Settings />
+    }
+    return <p>Page not found</p>;
+  }
+
+  useEffect(() => {
+    loadData();
+    // setLoadingMessages('');
+  }, []);
+
+  if (!context) return null;
+  const { currentPage, setFiles, userId } = context
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      {loadingMessages.length > 0 ? (
+        <Loading messages={loadingMessages} />
+      ) :
+        userId ? (
+          <main className={styles.main} >
+            <div className={styles.sidebar}>
+              <SideBar />
+            </div>
+            <div className={styles.render_page}>
+              <div className={styles.footer_container}>
+                <Header />
+              </div>
+              {renderPage()}
+              <div className={styles.footer_container}>
+                <Footer />
+              </div>
+            </div>
+          </main>
+        ) : (
+          <Login />
+        )}
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      <PdfViewer />
+      <UploadModal />
+      <div className={styles.notification_container}>
+
+      </div>
+    </div >
   );
 }

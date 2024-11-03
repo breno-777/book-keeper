@@ -1,0 +1,42 @@
+@use '@styles/variables' as *;
+
+.page {
+    position: relative;
+    height: 100vh;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+
+    & .main {
+        display: grid;
+        grid-template-columns: 220px auto;
+
+        height: 100%;
+        overflow: hidden;
+
+        & .render_page {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            padding: 0 2.5em;
+
+            height: 100%;
+            overflow: hidden;
+        }
+
+        & .footer_container {
+            flex-shrink: 0;
+        }
+
+    }
+
+    & .notification_container {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        margin: 1em;
+        width: 300px;
+        height: 64px;
+    }
+}
