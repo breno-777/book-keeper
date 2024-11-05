@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import "@styles/_globals.scss";
-import { Poppins } from 'next/font/google'
 import { AppProvider } from "@/hooks/context/AppProvider";
-
-const poppins = Poppins({
-  weight: '400',
-  variable: "--font-poppins",
-  subsets: ['latin']
-})
 
 export const metadata: Metadata = {
   icons: {
@@ -24,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}`}>
+      <body>
         <AppProvider>
           {children}
         </AppProvider>

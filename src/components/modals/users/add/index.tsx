@@ -1,6 +1,6 @@
 import { Button } from '@/components/buttons';
 import styles from './add.module.scss';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { IUser } from '@/interfaces/user.interface';
 import { PageContext } from '@/hooks/context/page/PageContext';
@@ -8,25 +8,32 @@ import { PageContext } from '@/hooks/context/page/PageContext';
 export const AddUserModal = () => {
     const context = useContext(PageContext);
     const [username, setUsername] = useState<string>('');
+    const [userContent, setUserContent] = useState();
+
+    useEffect(() => {
+        if (context && userContent) {
+            setUser(userContent)
+        }
+    }, [context, userContent])
+
     if (!context) return null;
-    const { isAddUserModalOpen, toggleAddUserModal, setUserId } = context;
+    const { isAddUserModalOpen, toggleAddUserModal, setUser } = context;
     if (!isAddUserModalOpen) return null;
 
     const id = uuidv4();
     const userData: IUser = {
         id: id,
         name: username,
-        folder_name: id,
+        books_path: ''
     }
 
     const handleCreateUser = async () => {
-        const newUser = await window.electron.createUser('create-user', userData);
-        if (newUser) {
-            await window.electron.createUser('get-user', userData.id).then(() => {
-                setUserId(userData.id);
-                localStorage.setItem('userId', userData.id)
-                toggleAddUserModal();
-            });
+        await window.electron.createUser('create-user', userData).then((response) => {
+            setUserContent(response);
+        });
+        if (userContent) {
+            setUser(userContent);
+            toggleAddUserModal();
         }
     }
 

@@ -28,13 +28,12 @@ export const Header = () => {
     }, []);
 
     if (!context) return null;
-    const { setSearchFilter, setUserId, user } = context;
+    const { setSearchFilter, user} = context;
 
     return (
         <div className={styles.container}>
             <p className={`${styles.title} ${isSearchFocused && styles.hidden}`}>Welcome Back, {user?.name}!</p>
             <div className={styles.searchbar_container}>
-                <button onClick={() => setUserId('')}>Logout</button>
                 <div className={`${styles.shortcut_container} ${isSearchFocused && styles.hidden}`}>
                     CTRL + P
                 </div>

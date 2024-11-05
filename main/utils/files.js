@@ -20,7 +20,7 @@ function getFile(filePath) {
     }
 }
 
-function getFiles(directoryPath) {
+function getAllFiles(directoryPath) {
     const files = [];
     const fileList = fs.readdirSync(directoryPath);
 
@@ -28,11 +28,7 @@ function getFiles(directoryPath) {
         const filePath = path.join(directoryPath, file);
         const size = fs.statSync(filePath).size;
         const last_modified = fs.statSync(filePath).mtime;
-        const extension = file
-            .split('.')
-            .filter(Boolean) // removes empty extensions (e.g. `filename...txt`)
-            .slice(1)
-            .join('.')
+        const extension = file.substring(file.lastIndexOf('.') + 1);
 
         const formattedLastModified = new Date(last_modified).toLocaleDateString('pt-BR', {
             day: '2-digit',
@@ -52,7 +48,7 @@ function getFiles(directoryPath) {
         });
 
         if (fs.statSync(filePath).isDirectory()) {
-            files.push(...getFiles(filePath));
+            files.push(...getAllFiles(filePath));
         }
     }
     return files;
@@ -77,6 +73,7 @@ async function saveFile(directoryPath, file, userId) {
         return null;
     }
 }
+
 
 // ————————————————————————————————————————————————————————————————————
 // This function is used to open location of file in the explorer
@@ -112,4 +109,4 @@ async function deleteFile(filePath) {
     }
 }
 
-module.exports = { openFileLocation, deleteFile, getFiles, saveFile, getFile };
+module.exports = { openFileLocation, deleteFile, getAllFiles, saveFile, getFile };

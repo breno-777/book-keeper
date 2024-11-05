@@ -4,6 +4,14 @@ import { IFile } from '@/interfaces/files.interface'
 import { useContext } from 'react';
 import { PageContext } from '@/hooks/context/page/PageContext';
 import { Dropdown } from '@/components/dropdown';
+import Image from 'next/image';
+
+import txtIcom from '@assets/icons/files/txt.svg'
+import docIcom from '@assets/icons/files/doc.svg'
+import pdfIcom from '@assets/icons/files/pdf.svg'
+import pptIcom from '@assets/icons/files/ppt.svg'
+import pngIcom from '@assets/icons/files/png.svg'
+import jpgIcom from '@assets/icons/files/jpg.svg'
 
 export const GridFileCard = ({ file }: { file: IFile }) => {
     const context = useContext(PageContext);
@@ -12,7 +20,6 @@ export const GridFileCard = ({ file }: { file: IFile }) => {
 
     const uniqueId = file.name.toLowerCase().replace(/\s+/g, '-');
 
-
     const truncateString = (str: string, maxLength: number) => {
         if (str.length > maxLength) {
             return str.slice(0, maxLength) + '...';
@@ -20,8 +27,6 @@ export const GridFileCard = ({ file }: { file: IFile }) => {
         return str;
     };
     const truncatedString = truncateString(file.name, 34);
-
-
 
     const handleOpenDropdown = (event: React.MouseEvent) => {
         event.stopPropagation();
@@ -38,7 +43,17 @@ export const GridFileCard = ({ file }: { file: IFile }) => {
         <div style={{ position: 'relative' }}>
             <div className={styles.container} onClick={handleCardClick}>
                 <div className={styles.file_preview_container}>
-
+                    <Image
+                        src={
+                            file.extension === 'pdf' ? pdfIcom :
+                                file.extension === 'txt' ? txtIcom :
+                                    file.extension === 'doc' ? docIcom :
+                                        file.extension === 'ppt' ? pptIcom :
+                                            file.extension === 'png' ? pngIcom : jpgIcom
+                        }
+                        alt='file_icon'
+                        className={styles.file_icon}
+                    />
                 </div>
                 <p className={styles.file_name}>{file.name ? truncatedString : 'File name here'}</p>
                 <div className={styles.divider} />

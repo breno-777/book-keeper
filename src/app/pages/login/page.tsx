@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 import styles from './login.module.scss'
 import { AddUserCard } from '@/components/users/add/card'
@@ -18,13 +20,15 @@ export function Login() {
             <div
                 className={styles.user_container}
                 style={
-                    { '--user-quantity': users.length > 2 ? users.length + 1 : users.length >= 1 ? 2 : 1 } as React.CSSProperties
+                    { '--user-quantity': users.length >= 2 ? users.length + 1 : users.length >= 1 ? 2 : 1 } as React.CSSProperties
                 }>
-                {users.map((user, index) => {
-                    return (
-                        <AddUserCard key={index} userData={user} />
-                    )
-                })}
+                {users.length > 0 && (
+                    users.map((user, index) => {
+                        return (
+                            <AddUserCard key={index} userData={user} />
+                        )
+                    })
+                )}
                 <AddUserCard userData={null} />
             </div>
 

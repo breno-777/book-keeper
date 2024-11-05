@@ -13,6 +13,7 @@ import SystemTheme from '../../../assets/images/default_system_theme_card.png'
 import LightTheme from '../../../assets/images/light_theme_card.png'
 import DarkTheme from '../../../assets/images/dark_theme_card.png'
 import { PageContext } from '@/hooks/context/page/PageContext';
+import { RxExit } from 'react-icons/rx';
 export default function Settings() {
     const [colors, setColors] = useState<Colors>({
         dark: {
@@ -39,10 +40,18 @@ export default function Settings() {
         }));
     };
 
+    const handleLogout = () => {
+        clear();
+    }
+    const handleDeleteUser = async () => {
+        await window.electron.on('delete-user', context?.user?.id);
+        clear();
+    }
+
     const context = useContext(PageContext);
     if (!context) return null;
 
-    const { setCurrentPage } = context;
+    const { setCurrentPage, clear } = context;
     const handleClick = (page: string) => {
         setCurrentPage(page)
     };
@@ -176,6 +185,14 @@ export default function Settings() {
                         <div>
                             <Button variant='primary' onClick={() => console.log('Updating')}>Update</Button>
                         </div>
+                        <div className={styles.exit_container}>
+                            <RxExit />
+                            <p onClick={() => handleLogout()}>Logout</p>
+                        </div>
+                        <div className={styles.exit_container}>
+                            <RxExit />
+                            <p onClick={() => handleDeleteUser()}>Delete User</p>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.options_container}>
@@ -193,6 +210,7 @@ export default function Settings() {
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div className={styles.footer}>

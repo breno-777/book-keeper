@@ -28,13 +28,20 @@ export type PageContextType = {
     files: IFile[] | [];
     setFiles: (data: IFile[] | []) => void;
 
+    totalFiles: number;
+    setTotalFiles: (total: number) => void;
+
     searchFilter: string;
     setSearchFilter: (str: string) => void;
 
-    userId: string;
-    setUserId: (data: string) => void;
     user: IUser | null;
     setUser: (data: IUser | null) => void;
+
+    paginatorCurrentPage: number;
+    setPaginatorCurrentPage: (page: number) => void;
+
+    clear: () => void;
+
 };
 
 // Context
@@ -52,11 +59,12 @@ export const PageProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [openDropdownId, setOpenDropdownId] = useState<string>('');
     const [fileData, setFileData] = useState<IFile | null>(null);
     const [files, setFiles] = useState<IFile[] | []>([]);
+    const [totalFiles, setTotalFiles] = useState<number>(0);
 
     const [searchFilter, setSearchFilter] = useState<string>('');
 
-    const [userId, setUserId] = useState<string>('');
     const [user, setUser] = useState<IUser | null>(null);
+    const [paginatorCurrentPage, setPaginatorCurrentPage] = useState<number>(1);
 
     const toggleUploadModal = () => setUploadModalOpen((prev) => !prev);
     const togglePdfModal = () => setPdfModalOpen((prev) => !prev);
@@ -65,6 +73,19 @@ export const PageProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const toggleDropdown = (id: string) => {
         setOpenDropdownId(prev => (prev === id ? '' : id));
     };
+
+    const clear = () => {
+        setCurrentPage('all-books');
+        setUploadModalOpen(false);
+        setPdfModalOpen(false);
+        setAddUserModalOpen(false);
+        setOpenDropdownId('');
+        setFileData(null);
+        setFiles([]);
+        setSearchFilter('');
+        setUser(null);
+        setPaginatorCurrentPage(1);
+    }
 
     return (
         <PageContext.Provider value={{
@@ -87,13 +108,19 @@ export const PageProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             files,
             setFiles,
 
+            totalFiles,
+            setTotalFiles,
+
             searchFilter,
             setSearchFilter,
 
-            userId,
-            setUserId,
             user,
-            setUser
+            setUser,
+
+            paginatorCurrentPage,
+            setPaginatorCurrentPage,
+
+            clear
         }}>
             {children}
         </PageContext.Provider >

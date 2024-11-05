@@ -8,17 +8,14 @@ import { PiUserCircleFill } from "react-icons/pi"
 
 export const AddUserCard = ({ userData }: { userData: IUser | null }) => {
     const context = useContext(PageContext);
-    if (!context) return null;
-    const { toggleAddUserModal, setUserId, setUser } = context;
 
     const handleClick = () => {
         if (userData) {
-            setUserId(userData.id)
-            setUser(userData)
+            context?.setUser(userData);
         } else {
-            toggleAddUserModal()
+            context?.toggleAddUserModal();
         }
-    }
+    };
 
     return (
         <div className={styles.container} onClick={() => handleClick()}>

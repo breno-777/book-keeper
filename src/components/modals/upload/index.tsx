@@ -9,31 +9,42 @@ import { useDropzone } from 'react-dropzone';
 type FileData = {
     name: string;
     content: string;
-    userId: string | null;
+    booksDirPath: string;
 };
 
 export const UploadModal = () => {
     const context = useContext(PageContext);
-    const [fileData, setFileData] = useState<FileData | null>(null);
+    const [fileDataList, setFileDataList] = useState<FileData[]>([]);
+    const [fileName, setFileName] = useState<string>('');
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (!file) return;
-
-        if (file.type !== 'application/pdf') {
-            console.error('Please upload a PDF file.');
+        if (!user || user.books_path === '') {
+            console.error('User or books path is missing.');
             return;
         }
+        acceptedFiles.forEach((file) => {
+            if (file.type !== 'application/pdf') {
+                console.error('Please upload a PDF file.');
+                return;
+            }
 
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onabort = () => console.log('File reading was aborted');
-        reader.onerror = () => console.log('File reading failed');
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onerror = () => console.log('File reading failed');
+            reader.onabort = () => console.log('File reading was aborted');
 
-        reader.onload = () => {
-            const base64Data = (reader.result as string).split(',')[1];
-            setFileData({ name: file.name, content: base64Data, userId: localStorage.getItem('userId') });
-        };
+            reader.onload = () => {
+                const base64Data = (reader.result as string).split(',')[1];
+                setFileDataList((prevFiles) => [
+                    ...prevFiles,
+                    {
+                        name: file.name,
+                        content: base64Data,
+                        booksDirPath: user.books_path
+                    }
+                ]);
+            };
+        });
 
     }, []);
 
@@ -43,17 +54,17 @@ export const UploadModal = () => {
     });
 
     useEffect(() => {
-        return () => setFileData(null);
+        return () => setFileDataList([]);
     }, [context?.isUploadModalOpen]);
 
     if (!context) return null;
-    const { isUploadModalOpen, toggleUploadModal, setFiles, files } = context;
+    const { isUploadModalOpen, toggleUploadModal, setFiles, files, user } = context;
     if (!isUploadModalOpen) return null;
 
     const handleSaveFile = async () => {
-        if (fileData) {
-            await window.electron.on('save-file', fileData).then((result) => {
-                setFiles([...files, result]);
+        if (fileDataList) {
+            await window.electron.on('save-files', fileDataList).then((result) => {
+                setFiles([...files, ...result]);
                 toggleUploadModal()
             });
         } else {
@@ -65,7 +76,23 @@ export const UploadModal = () => {
         <div className={styles.container}>
             <div className={styles.modal_container}>
                 <p className={styles.title}>Add new file</p>
-                <input type="text" placeholder='File Name' defaultValue={fileData?.name.split('.').slice(0, -1).join('.')} />
+                {fileDataList.length <= 1 ? (
+                    <input
+                        type="text"
+                        placeholder='File Name'
+                        defaultValue={fileDataList[0]?.name.split('.').slice(0, -1).join('.')}
+                        value={fileName}
+                        onChange={(e) => setFileName(e.target.value)}
+                    />
+                ) : (
+                    <div>
+                        {fileDataList.map((file, index) => {
+                            return (
+                                <p key={index}>{file.name}</p>
+                            )
+                        })}
+                    </div>
+                )}
 
                 <div className={styles.upload_file_area_container} {...getRootProps()}>
                     <LiaCloudUploadAltSolid size={96} />
@@ -76,8 +103,9 @@ export const UploadModal = () => {
                 <div className={styles.footer_container}>
                     <Button outline onClick={() => toggleUploadModal()}>Cancel</Button>
                     <div className={styles.selected_file_details_container}>
-                        {fileData ? fileData.name.slice(0, 28) + '...' : 'No file selected'}
-                        <LuTrash size={16} className={styles.remove_file_icon} onClick={() => setFileData(null)} />
+                        {fileDataList.length === 1 ? fileDataList[0].name.slice(0, 28) + '...' :
+                            fileDataList.length > 1 ? `${fileDataList.length}x files uploaded` : 'No files uploaded'}
+                        <LuTrash size={16} className={styles.remove_file_icon} onClick={() => setFileDataList([])} />
                     </div>
                     <Button variant='primary' onClick={() => handleSaveFile()}>Save</Button>
                 </div>

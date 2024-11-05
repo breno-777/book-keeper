@@ -1,11 +1,17 @@
 import { IoMdMore } from 'react-icons/io';
 import styles from './list.module.scss';
 import { IFile } from '@/interfaces/files.interface';
-import { FaRegFilePdf } from 'react-icons/fa';
 import { Dropdown } from '@/components/dropdown';
 import { useContext } from 'react';
 import { PageContext } from '@/hooks/context/page/PageContext';
+import Image from 'next/image';
 
+import txtIcom from '@assets/icons/files/txt.svg'
+import docIcom from '@assets/icons/files/doc.svg'
+import pdfIcom from '@assets/icons/files/pdf.svg'
+import pptIcom from '@assets/icons/files/ppt.svg'
+import pngIcom from '@assets/icons/files/png.svg'
+import jpgIcom from '@assets/icons/files/jpg.svg'
 
 export const ListFileCard = ({ file }: { file: IFile }) => {
     const context = useContext(PageContext);
@@ -38,7 +44,17 @@ export const ListFileCard = ({ file }: { file: IFile }) => {
             <div className={styles.container} onClick={handleCardClick}>
                 <div className={styles.file_details_container}>
                     <div className={styles.icon_container}>
-                        <FaRegFilePdf />
+                        <Image
+                            src={
+                                file.extension === 'pdf' ? pdfIcom :
+                                    file.extension === 'txt' ? txtIcom :
+                                        file.extension === 'doc' ? docIcom :
+                                            file.extension === 'ppt' ? pptIcom :
+                                                file.extension === 'png' ? pngIcom : jpgIcom
+                            }
+                            alt='file_icon'
+                            className={styles.file_icon}
+                        />
                         <p className={styles.file_name}>{truncatedString || 'File name here'}</p>
                     </div>
                     <div className={styles.file_date}>

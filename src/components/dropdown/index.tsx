@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { ReactNode, useContext, useEffect, useRef } from 'react';
 import styles from './dropdown.module.scss';
 import { PageContext } from '@/hooks/context/page/PageContext';
 import { LuTrash } from 'react-icons/lu';
@@ -8,6 +8,7 @@ import { handleDeleteFile, handleOpenFileFolder } from '@/utils/handles';
 
 interface DropdownProps {
     id: string;
+    li?: ReactNode[];
 }
 
 export const Dropdown = ({ id }: DropdownProps) => {

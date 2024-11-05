@@ -35,6 +35,11 @@
             display: flex;
             align-items: center;
             gap: 1em;
+
+            & .file_icon{
+                max-width: 24px;
+                height: auto;
+            }
         }
 
         & .file_date {

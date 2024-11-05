@@ -22,6 +22,11 @@
 //     --green: #3ED598;
 // }
 
+@font-face{
+    font-family: poppins;
+    src: url('../fonts/poppins/Poppins-Regular.ttf');
+}
+
 html,
 body {
     background: $light-secondary-color;
@@ -32,6 +37,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
 
     user-select: none;
+    caret-color: $light-primary-color;
+    font-family: poppins;
 }
 
 * {
@@ -39,7 +46,7 @@ body {
     padding: 0;
     margin: 0;
 
-    font-family: var(--font-poppins);
+    // font-family: var(--font-poppins);
 }
 
 

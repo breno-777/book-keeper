@@ -93,6 +93,16 @@
             gap: 0.5em;
             width: 100%;
 
+            & .exit_container{
+                display: flex;
+                align-items: center;
+                gap: 0.4em;
+                max-width: 90px;
+
+                color: $red-color;
+                cursor: pointer;
+            }
+
             & .toggle_option {
                 display: flex;
                 justify-content: space-between;

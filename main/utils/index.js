@@ -38,39 +38,3 @@ async function getUsers(usersPath) {
 }
 
 module.exports = { formatSize, getUsers };
-
-
-// async function saveFiles(directoryPath, files) {
-//     const savedFiles = [];
-
-//     // Cria o diretório, se não existir
-//     const dir = path.dirname(directoryPath);
-//     if (!fs.existsSync(dir)) {
-//         fs.mkdirSync(dir, { recursive: true });
-//     }
-
-//     for (let i = 0; i < files.length; i++) {
-//         const file = files[i];
-//         const filePath = path.join(directoryPath, file.name); 
-
-//         try {
-//             // Salvar o arquivo de forma assíncrona
-//             await fs.promises.writeFile(filePath, file.content)
-//             console.log('File copied successfully');
-
-//             const savedFile = {
-//                 name: path.basename(filePath),
-//                 path: filePath,
-//                 size: formatSize(fs.statSync(filePath).size),
-//                 last_modified: new Date().toLocaleString('pt-BR'),
-//                 extension: path.extname(filePath).slice(1),
-//             };
-
-//             savedFiles.push(savedFile);
-//         } catch (error) {
-//             console.error(`Failed to save file ${file.name} to path ${filePath}:`, error.message);
-//         }
-//     }
-
-//     return savedFiles;
-// }

@@ -2,13 +2,13 @@ import { Spinner } from '@/components/spinner'
 import styles from './loading.module.scss'
 
 interface LoadingProperties {
-    messages: string
+    messages?: string;
 }
-export function Loading({ messages }: LoadingProperties) {
+export default function Loading({ messages = 'Checking for updates' }: LoadingProperties) {
     return (
         <div className={styles.container}>
             <Spinner />
-            <p className={styles.messages}>{messages ? messages : 'Checking for updates'}</p>
+            <p className={styles.messages}>{messages}</p>
         </div>
     )
 }

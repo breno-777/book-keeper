@@ -1,6 +1,4 @@
-import { PageContext } from "@/hooks/context/page/PageContext";
 import { IFile } from "@/interfaces/files.interface";
-import { useContext } from "react";
 
 export async function handleOpenFileFolder(file: IFile | null) {
     await window.electron.on('open-file-explorer', file);

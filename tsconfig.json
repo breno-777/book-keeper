@@ -28,6 +28,9 @@
       ],
       "@styles/*": [
         "./src/style/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
       ]
     }
   },

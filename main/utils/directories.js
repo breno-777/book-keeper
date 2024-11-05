@@ -15,22 +15,6 @@ async function checkDirectory(rootPath, directoryName) {
         }
         throw error;
     }
-
-    // return fs.promises.access(dirPath)
-    //     .then(() => {
-    //         console.log(`Folder already exists at ${dirPath}`);
-    //         return;
-    //     })
-    //     .catch(async () => {
-    //         return fs.promises.mkdir(dirPath, { recursive: true })
-    //             .then(() => {
-    //                 console.log(`Folder created at: ${dirPath}`);
-    //             })
-    //             .catch((error) => {
-    //                 console.error(`Error creating folder at ${dirPath}:`, error);
-    //                 throw new Error(`Failed to create folder at ${dirPath}.`);
-    //             });
-    //     });
 }
 
 async function createDirectory(rootPath, directoryName) {

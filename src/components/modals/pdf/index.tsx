@@ -43,7 +43,6 @@ function PdfViewer() {
             setNumPages(0);
             setPageNumber(1);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context?.fileData, context?.isPdfModalOpen]);
 
     if (!context) return null;
@@ -70,7 +69,7 @@ function PdfViewer() {
     return (
         <div className={styles.container}>
             <div className={styles.document_container}>
-                <Document file={pdfData} onLoadSuccess={onDocumentLoadSuccess}>
+                <Document file={pdfData} onLoadSuccess={onDocumentLoadSuccess} >
                     {openPages ? (
                         Array.from({ length: numPages }, (_, i) => (
                             <Page scale={1.6} key={i} pageNumber={i + 1} renderTextLayer={false} renderAnnotationLayer={false} />

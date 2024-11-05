@@ -2,6 +2,7 @@ export interface IUser {
     id: string;
     name: string;
     avatar?: Blob;
-    folder_name: string;
+    user_path?: string;
+    books_path: string;
     settings?: JSON;
 }

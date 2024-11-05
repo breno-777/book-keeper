@@ -2,10 +2,10 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld(('electron'), {
-    on: (channel, file) => ipcRenderer.invoke(channel, file),
+    on: (channel, data) => ipcRenderer.invoke(channel, data),
 
     startFunction: (channel) => ipcRenderer.invoke(channel),
-    getAllBooks: (channel, data) => ipcRenderer.invoke(channel, data),
+    getAllBooks: (channel, data, currentPage, maxFilesPerPage) => ipcRenderer.invoke(channel, data, currentPage, maxFilesPerPage),
     createUser: (channel, data) => ipcRenderer.invoke(channel, data),
     getUser: (channel, data) => ipcRenderer.invoke(channel, data),
     getAllUsers: (channel, data) => ipcRenderer.invoke(channel, data),

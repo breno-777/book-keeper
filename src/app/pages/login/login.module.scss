@@ -25,5 +25,6 @@
         display: grid;
         grid-template-columns: repeat(var(--user-quantity), 1fr);
         gap: 1em;
+        justify-content: center;
     }
 }
