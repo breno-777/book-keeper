@@ -6,7 +6,7 @@ import { AddUserCard } from '@/components/users/add/card'
 import { IUser } from '@/interfaces/user.interface';
 import { AddUserModal } from '@/components/modals/users/add';
 
-export function Login() {
+export default function Login() {
     const [users, setUsers] = useState<IUser[]>([]);
     useEffect(() => {
         window.electron.getAllUsers('get-all-users').then((users: IUser[]) => {

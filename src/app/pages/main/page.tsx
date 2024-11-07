@@ -12,7 +12,7 @@ import { HiOutlineInboxStack } from 'react-icons/hi2';
 export default function Main() {
     const context = useContext(PageContext);
     const [gridLayout, setGridLayout] = useState<boolean>(false);
-    const filesPerPage = 24 ;
+    const filesPerPage = 24;
 
     useEffect(() => {
         if (context?.user) {

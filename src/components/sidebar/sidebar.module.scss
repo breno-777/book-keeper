@@ -34,36 +34,18 @@
         }
 
         & li {
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.125em 0.625em;
-
-            border-radius: 6px;
-
-            & .section_container {
-                display: flex;
-                align-items: center;
-                gap: 1em;
-            }
-
-            transition: 0.2s ease-in-out;
         }
 
-        .selected {
-            color: $white-color !important;
-            background: $light-primary-color !important;
-        }
-
-        & li:hover {
-            cursor: pointer;
-            scale: 1.01;
-            color: $white-color;
-            background: $light-primary-color;
-        }
-
-        & li:last-child {
+        & .bottom {
+            display: flex;
+            flex-direction: column;
             margin-top: auto;
+
+            gap: 1em;
         }
     }
 

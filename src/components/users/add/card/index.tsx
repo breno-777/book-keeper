@@ -4,7 +4,7 @@ import { IUser } from "@/interfaces/user.interface"
 import Image from "next/image"
 import { useContext } from "react"
 import { PageContext } from "@/hooks/context/page/PageContext"
-import { PiUserCircleFill } from "react-icons/pi"
+import { MdPerson } from "react-icons/md"
 
 export const AddUserCard = ({ userData }: { userData: IUser | null }) => {
     const context = useContext(PageContext);
@@ -24,7 +24,9 @@ export const AddUserCard = ({ userData }: { userData: IUser | null }) => {
                     userData.avatar ? (
                         <Image src='' alt="user_avatar" priority width={94} height={94} />
                     ) : (
-                        <PiUserCircleFill size={64} />
+                        <div className={styles.icon_avatar_container}>
+                            <MdPerson size={48} />
+                        </div>
                     )
 
                 ) : (

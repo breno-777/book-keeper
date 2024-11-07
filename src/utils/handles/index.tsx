@@ -1,5 +1,6 @@
 import { IFile } from "@/interfaces/files.interface";
 
+
 export async function handleOpenFileFolder(file: IFile | null) {
     await window.electron.on('open-file-explorer', file);
 }

@@ -5,6 +5,7 @@ import { LuTrash } from 'react-icons/lu';
 import { IoFolderOpenOutline, IoOpenOutline } from 'react-icons/io5';
 import { CiEdit, CiExport } from 'react-icons/ci';
 import { handleDeleteFile, handleOpenFileFolder } from '@/utils/handles';
+import { IDialogModal } from '@/interfaces/modals.interface';
 
 interface DropdownProps {
     id: string;
@@ -32,9 +33,33 @@ export const Dropdown = ({ id }: DropdownProps) => {
 
 
     if (!context) return null;
-    const { openDropdownId, toggleDropdown, togglePdfModal, fileData, files, setFiles } = context;
+    const { openDropdownId, toggleDropdown, togglePdfModal, fileData, files, setFiles, handleSetDialogModalContents, toggleDialogModal } = context;
 
     if (openDropdownId !== id) return null;
+
+    const modalDialogContents: IDialogModal = {
+        title: 'Delete File',
+        message: `Are you sure you want to delete the file "${fileData?.name}"?`,
+        details: 'File Path: C:/breno/documents/BookKeeper/books/file_name',
+        confirmButtonText: 'Yes, Delete!',
+        dismissButtonText: 'No, Keep it.',
+        dismissButtonVariant: 'danger',
+        onConfirm: () => {
+            handleDeleteFile(fileData).then((result) => {
+                const updatedFiles = files.filter(f => f.path !== result.path);
+                setFiles(updatedFiles);
+            });
+            toggleDialogModal();
+        },
+        onDismiss: () => {
+            toggleDialogModal();
+        },
+    }
+
+    const handleOpenDialogModal = () => {
+        handleSetDialogModalContents(modalDialogContents);
+        toggleDialogModal();
+    }
 
     const handleClick = (action: string) => {
         toggleDropdown(id);
@@ -44,10 +69,7 @@ export const Dropdown = ({ id }: DropdownProps) => {
         } else if (action === 'open-file-folder') {
             handleOpenFileFolder(fileData)
         } else if (action === 'delete') {
-            handleDeleteFile(fileData).then((result) => {
-                const updatedFiles = files.filter(f => f.path !== result.path);
-                setFiles(updatedFiles);
-            })
+            handleOpenDialogModal();
         }
     }
 

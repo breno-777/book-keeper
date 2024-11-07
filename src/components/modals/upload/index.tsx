@@ -5,6 +5,7 @@ import { Button } from '@/components/buttons';
 import { LuTrash } from 'react-icons/lu';
 import { LiaCloudUploadAltSolid } from 'react-icons/lia';
 import { useDropzone } from 'react-dropzone';
+import { IoClose } from 'react-icons/io5';
 
 type FileData = {
     name: string;
@@ -72,6 +73,10 @@ export const UploadModal = () => {
         }
     };
 
+    const handleRemoveFile = (index: number) => {
+        setFileDataList((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.modal_container}>
@@ -85,10 +90,13 @@ export const UploadModal = () => {
                         onChange={(e) => setFileName(e.target.value)}
                     />
                 ) : (
-                    <div>
+                    <div className={styles.files_name_container}>
                         {fileDataList.map((file, index) => {
                             return (
-                                <p key={index}>{file.name}</p>
+                                <div key={index} className={styles.file_name_container}>
+                                    <p className={styles.file_name}>{file.name}</p>
+                                    <IoClose className={styles.remove_icon} onClick={() => handleRemoveFile(index)} />
+                                </div>
                             )
                         })}
                     </div>
@@ -101,13 +109,13 @@ export const UploadModal = () => {
                 </div>
 
                 <div className={styles.footer_container}>
-                    <Button outline onClick={() => toggleUploadModal()}>Cancel</Button>
+                    <Button outline onClick={() => toggleUploadModal()}>Give up</Button>
                     <div className={styles.selected_file_details_container}>
                         {fileDataList.length === 1 ? fileDataList[0].name.slice(0, 28) + '...' :
                             fileDataList.length > 1 ? `${fileDataList.length}x files uploaded` : 'No files uploaded'}
                         <LuTrash size={16} className={styles.remove_file_icon} onClick={() => setFileDataList([])} />
                     </div>
-                    <Button variant='primary' onClick={() => handleSaveFile()}>Save</Button>
+                    <Button variant='primary' onClick={() => handleSaveFile()}>Ready</Button>
                 </div>
             </div>
         </div>

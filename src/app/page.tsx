@@ -1,17 +1,19 @@
 'use client'
 
 import styles from "@styles/page.module.scss";
-import Loading from "./pages/loading/page";
-import Settings from "./pages/settings/page";
-import Main from "./pages/main/page";
+import { useContext, useEffect, useState } from "react";
 import PdfViewer from "@/components/modals/pdf";
 import { SideBar } from "@/components/sidebar";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { useContext, useEffect, useState } from "react";
 import { PageContext } from "@/hooks/context/page/PageContext";
 import { UploadModal } from "@/components/modals/upload";
-import { Login } from "./pages/login/page";
+import Loading from "./pages/loading";
+import Login from "./pages/login/page";
+import Main from "./pages/main/page";
+import Settings from "./pages/settings/page";
+import Apis from "./pages/apis";
+import { DialogModal } from "@/components/modals/dialog";
 
 export default function Home() {
   const context = useContext(PageContext);
@@ -44,6 +46,8 @@ export default function Home() {
       return <Main />
     } else if (currentPage === 'settings') {
       return <Settings />
+    } else if (currentPage === 'apis') {
+      return <Apis />
     }
     return <p>Page not found</p>;
   }
@@ -80,6 +84,7 @@ export default function Home() {
         )}
 
       <PdfViewer />
+      <DialogModal />
       {user && isUploadModalOpen && <UploadModal />}
       <div className={styles.notification_container}>
 

@@ -16,16 +16,8 @@ import jpgIcom from '@assets/icons/files/jpg.svg'
 export const ListFileCard = ({ file }: { file: IFile }) => {
     const context = useContext(PageContext);
     if (!context || !file) return null;
-
-    const truncateString = (str: string, maxLength: number) => {
-        if (str.length > maxLength) {
-            return str.slice(0, maxLength) + '...';
-        }
-        return str;
-    };
-    const truncatedString = truncateString(file.name, 32);
-
-    const { toggleDropdown, setFileData, togglePdfModal } = context;
+    
+    const { toggleDropdown, setFileData, togglePdfModal, handleAddRecentsFiles } = context;
     const uniqueId = file.name.toLowerCase().replace(/\s+/g, '-');
 
     const handleOpenDropdown = (event: React.MouseEvent) => {
@@ -35,6 +27,7 @@ export const ListFileCard = ({ file }: { file: IFile }) => {
     };
 
     const handleCardClick = () => {
+        handleAddRecentsFiles(file);
         togglePdfModal();
         setFileData(file);
     };
@@ -55,7 +48,7 @@ export const ListFileCard = ({ file }: { file: IFile }) => {
                             alt='file_icon'
                             className={styles.file_icon}
                         />
-                        <p className={styles.file_name}>{truncatedString || 'File name here'}</p>
+                        <p className={styles.file_name}>{file.name || 'File name here'}</p>
                     </div>
                     <div className={styles.file_date}>
                         {file.last_modified || '00/00/00'}

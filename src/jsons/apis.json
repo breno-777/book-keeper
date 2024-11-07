@@ -1,0 +1,52 @@
+[
+    {
+        "name": "React",
+        "logo": "/assets/icons/apis/react_logo.svg",
+        "url": "https://react.dev"
+    },
+    {
+        "name": "React Electron",
+        "logo": "/assets/icons/apis/electron_logo.svg",
+        "url": "https://www.electronjs.org"
+    },
+    {
+        "name": "React Electron Builder",
+        "logo": "/assets/icons/apis/electron_logo.svg",
+        "url": "https://www.electron.build"
+    },
+    {
+        "name": "React Icons",
+        "logo": "/assets/icons/apis/react_icons_logo.svg",
+        "url": "https://github.com/react-icons/react-icons"
+    },
+    {
+        "name": "React Pdf",
+        "logo": "/assets/icons/apis/react_pdf_logo.png",
+        "url": "https://react-pdf.org"
+    },
+    {
+        "name": "React Drop Zone",
+        "logo": "/assets/icons/apis/react_drop_zone_logo.png",
+        "url": "https://github.com/react-dropzone/react-dropzone"
+    },
+    {
+        "name": "Sass",
+        "logo": "/assets/icons/apis/sass_logo.svg",
+        "url": "https://sass-lang.com"
+    },
+    {
+        "name": "Sass Loader",
+        "logo": "/assets/icons/apis/sass_logo.svg",
+        "url": "https://github.com/webpack-contrib/sass-loader"
+    },
+    {
+        "name": "Typescript",
+        "logo": "/assets/icons/apis/typescript_logo.svg",
+        "url": "https://www.typescriptlang.org"
+    },
+    {
+        "name": "NextJs",
+        "logo": "/assets/icons/apis/nextjs_logo.svg",
+        "url": "https://nextjs.org"
+    }
+]

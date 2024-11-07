@@ -15,6 +15,7 @@ import DarkTheme from '../../../assets/images/dark_theme_card.png'
 import { PageContext } from '@/hooks/context/page/PageContext';
 import { RxExit } from 'react-icons/rx';
 export default function Settings() {
+    const [selected, setSelected] = useState('default');
     const [colors, setColors] = useState<Colors>({
         dark: {
             primary: '5932EA',
@@ -68,16 +69,25 @@ export default function Settings() {
             <p>Select Theme</p>
 
             <div className={styles.theme_settings_container}>
-                <div className={styles.theme_card_container}>
-                    <Image className={styles.card} src={SystemTheme} alt='default_system_theme' width={408} height={294} />
+                <div
+                    onClick={() => setSelected('default')}
+                    className={`${styles.theme_card_container} ${selected === 'default' && styles.selected}`}
+                >
+                    <Image className={styles.card} src={SystemTheme} alt='default_system_theme' width={330} height={194} />
                     <p>Default System</p>
                 </div>
-                <div className={styles.theme_card_container}>
-                    <Image className={styles.card} src={LightTheme} alt='light_theme' width={408} height={294} />
+                <div
+                    onClick={() => setSelected('dark')}
+                    className={`${styles.theme_card_container} ${selected === 'dark' && styles.selected}`}
+                >
+                    <Image className={styles.card} src={LightTheme} alt='light_theme' width={330} height={194} />
                     <p>Light</p>
                 </div>
-                <div className={styles.theme_card_container}>
-                    <Image className={styles.card} src={DarkTheme} alt='dark_theme' width={408} height={294} />
+                <div
+                    onClick={() => setSelected('light')}
+                    className={`${styles.theme_card_container} ${selected === 'light' && styles.selected}`}
+                >
+                    <Image className={styles.card} src={DarkTheme} alt='dark_theme' width={330} height={194} />
                     <p>Dark</p>
                 </div>
             </div>

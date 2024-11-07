@@ -25,7 +25,7 @@
 
     & .file_details_container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
         justify-content: center;
         align-items: center;
 
@@ -36,9 +36,16 @@
             align-items: center;
             gap: 1em;
 
-            & .file_icon{
+            & .file_icon {
                 max-width: 24px;
                 height: auto;
+            }
+
+            & .file_name {
+                width: auto;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
@@ -55,6 +62,11 @@
 
         & .open_dropdown_button {
             cursor: pointer;
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+                color: $light-primary-color ;
+            }
         }
     }
 

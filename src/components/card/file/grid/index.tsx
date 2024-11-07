@@ -16,7 +16,7 @@ import jpgIcom from '@assets/icons/files/jpg.svg'
 export const GridFileCard = ({ file }: { file: IFile }) => {
     const context = useContext(PageContext);
     if (!context) return null;
-    const { toggleDropdown, setFileData, togglePdfModal } = context;
+    const { toggleDropdown, setFileData, togglePdfModal, handleAddRecentsFiles } = context;
 
     const uniqueId = file.name.toLowerCase().replace(/\s+/g, '-');
 
@@ -35,6 +35,7 @@ export const GridFileCard = ({ file }: { file: IFile }) => {
     };
 
     const handleCardClick = () => {
+        handleAddRecentsFiles(file);
         togglePdfModal();
         setFileData(file);
     };
